@@ -133,6 +133,14 @@
 			    map.setMapTypeId(google.maps.MapTypeId.HYBRID);
 			    });
 
+			     document.getElementById('btnCompass').addEventListener('click', function(){
+			       $('#draggable').toggle('active');
+			    });
+
+			    document.getElementById('btnInspector').addEventListener('click', function(){
+			       $('#mapDiv45').toggle('active');
+			    });
+
 	    	}
 	   
 
@@ -365,7 +373,7 @@
     	
     
 	
-	<input id="address" size="60" value="77 Geary St #400, San Francisco, CA 94108" /> 
+	<input id="address" size="60" value="3221 Porter Drive, Palo Alto, CA 94032" /> 
 	<button id="update_address" class="btn btn-secondary"> Update Address </button> 
 
 	
@@ -396,6 +404,8 @@
 			<button id="btnRoadmap"> Roadmap </button>
 			<button id="btnSatellite"> Satellite </button>
 			<button id="btnHybrid"> Hybrid </button> 
+			<button id="btnCompass"> Compass </button> 
+			<button id="btnInspector"> Inspector </button> 
     </div>
     <div id="mapDiv"></div>
     <div id="mapDiv45"></div>
@@ -436,11 +446,21 @@
   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   
   <style>
-  #draggable { width: 150px; height: 150px; padding: 0.5em; display: none;}
+  #draggable { width: 150px; height: 150px; padding: 0.5em; position: absolute;
+    left: 100px;
+    top: 150px;
+    display: none;}
+
+     #mapDiv45 { width: 150px; height: 150px; padding: 0.5em; position: absolute; border: 10px solid #FFFFFF;
+    right: 100px;
+    top: 150px;
+    } 
+
   </style>
   <script>
   $(function() {
     $( "#draggable" ).draggable();
+     $( "#mapDiv45" ).draggable();
   });
   </script>
 
