@@ -47,12 +47,19 @@
 
     		<script type="text/javascript">
 
+            $(document).ready(function() {           
 
 	  //       $(function() {   $( "#draggable" ).draggable(); });
 
+	       
+
+                   
+
+
 	 	    function initialize(){
                   
-            	    
+                     
+
 		            geocoder = new google.maps.Geocoder();
 		            address = document.getElementById('address').value;
 
@@ -163,8 +170,16 @@
 						         });
 
 		         				natureArea.setMap(map);
+		         				document.getElementById('placeListing').addEventListener('click', function() {
+		         					valueToBeStored = calculateValue();
+		         					storeInDB(valueToBeStored);
 
+		         				});
 					            document.getElementById('calculate').addEventListener('click', function(){
+					            	valueToBeStored = calculateValue()
+					            });
+
+					            function calculateValue(){
 
 							            surface_area =  Number(google.maps.geometry.spherical.computeArea(natureArea.getPath()));
 
@@ -182,23 +197,67 @@
 											console.log(data.outputs);
 				                            energyGenerated = data.outputs.ac_annual;
 				                            lease = energyGenerated * 0.2 * 0.15;
-				                            document.getElementById('results').innerHTML += "Estimated Electricity Production = " + energyGenerated + " kWh <br/>";
-				                            document.getElementById('results').innerHTML += "<strong> Lease =  $" + lease + " per year<strong> <br/>";
+				                            document.getElementById('results').innerHTML += "Estimated Electricity Production = " + energyGenerated.toFixed(2) + " kWh per year <br/>";
+				                            document.getElementById('results').innerHTML += "<h3>You can lease your roof for $" + lease.toFixed(2) + " per year, for 25 years. </h3>";
+
                             			});
+
+                            			
 
                    						var requestUtilityCompanies ="http://developer.nrel.gov/api/census_rate/v3.json?api_key=j3q56adLB5f8m98CwVYUkC95NC8h1GMK6mcSt9OP&region=block&id=101&lat=" + lat + "&lon=" + lon; 
   
                     					$.getJSON(requestUtilityCompanies, { }, function (data){
-                    						document.getElementById('results').innerHTML += "<strong>Utility Companies in Your Area: </strong>";
+                    					    document.getElementById('results2').innerHTML = "<strong>Potentially Interested Companies: </strong> <br/>";
+                    						document.getElementById('results2').innerHTML += "Utility Companies in Your Area: <br/>";
                     						var i=0;
+                    						utility='';
                     						while(data.outputs.utility_info[i]){
                   							console.log(data.outputs.utility_info[i].utility_name);
-        									document.getElementById('results').innerHTML += data.outputs.utility_info[i].utility_name + "<br />";
+        									document.getElementById('results2').innerHTML += data.outputs.utility_info[i].utility_name + "<br />";
+        									utility += data.outputs.utility_info[i].utility_name ;
         									i++;
         									}
+
+        									document.getElementById('results2').innerHTML += "<button id='listnow' class='btn btn-primary'> List Now </button> <br /> <br/>";
+
+                                            document.getElementById('listnow').addEventListener('click', function(){
+        									$('#menuToggle').toggleClass('active');
+											$('body').toggleClass('body-push-toleft');
+											$('#theMenu').toggleClass('menu-open');
+        									});
+
       									});
 
-                           		}); 
+      									
+
+      									value1 = "123";
+      									value2 = "12324.234325";
+      									value3 = "hallo";
+      									return [value1, value2, value3];
+
+      							};
+
+      							function storeInDB(data){
+      									data1 = data[1];
+      									data2 = data[2]; 
+      									/* get all the variables */ 
+      									          		var name =  $("#name").val(); 
+          												var email =  $("#email").val(); 
+          												var phoneNumber =  $("#phoneNumber").val(); 
+      									var fb = new Firebase("https://solarpanel.firebaseio.com");
+    
+							          		fb.push({ 	name: name,
+														email: email,
+														phoneNumber: phoneNumber,
+														address: document.getElementById('address').value,
+														roofArea: surface_area.toFixed(0), 
+														leasingPrice: lease.toFixed(2),
+														energyGenerated: energyGenerated.toFixed(2), 
+														localElectricityComp: utility,
+                                                       
+														
+							 				}); 
+							 	};
 		                 
 		                 } /* END OF IF CONDITION */
 
@@ -207,6 +266,13 @@
          	}
 
 
+              $("#calculateValue").click(function(){
+          	
+                initialize()
+          		/* WRITE YOUR CODE HERE TO CALCULATE THINGS */
+
+
+          })
 
        
 	    google.maps.event.addDomListener(window, "load", initialize);
@@ -214,7 +280,7 @@
 
 
 
-         $(document).ready(function() {  
+
 	     $('#update_address').click( function(){
 	        $('#results').empty();
     		initialize();
@@ -251,7 +317,7 @@
     		<input type="text" class="form-control" id="phoneNumber" placeholder="Enter phone">
   			</div>
 </form>
-<button  class="btn btn-primary" id="calculateValue">Calculate Value</button></a>
+<button  class="btn btn-primary" id="placeListing">List my Roof</button></a>
 			<a href="#"><i class="fa fa-facebook"></i></a>
 			<a href="#"><i class="fa fa-twitter"></i></a>
 			<a href="#"><i class="fa fa-dribbble"></i></a>
@@ -269,45 +335,72 @@
 	<section id="home" name="home">
 		
 	</section>
-	<div id="headerwrap">
+	<div id="headerwrap" style="padding-top: 0px;">
                
 		<div class="container">
-		 <h2> Start earning cash on your roof now. </h2>
-		 <p id="learn"> Learn more </p>    
-		        <div style="display: none;">
+		 <p style="padding: 10px;"> <a style="margin-right: 10px;" onclick="$('#learn').slideToggle();" > Learn more </a> | <a style="margin-left: 10px; margin-right: 10px;" href="listing.html"> Browse roofs </a> | <a style="margin-left: 10px;" onclick="$('#about').slideToggle();"> About Roofly </a> </p>   
+		 
+		 
+		        <div id="learn" style="display: none; background: #cccccc; padding: 10px; border-radius: 10px; ">
 			    <h3> 1- Use the map below to select which part of your roof to lease to power companies. </h3>
-			    <h3> 2- Get an instant estimate of how much you will earn. </h3>
-			    <h3> 3- List your space.  </h3>
+			    <h3> 2- Get an instant market price for your roof lease. </h3>
+			    <h3> 3- List your roof.  </h3>
 			    </div>
+
+			    <div id="about" style="display: none; background: #cccccc; padding: 10px; border-radius: 10px; ">
+			    <h3> Roofly is built with: </h3>
+			    <h3> APIs: Google Maps + PV Watts + Open EI + Idol onDemand  </h3>
+			    <h3> Data: Data.gov + Go Solar California  </h3>
+			    
+			    </div>
+
+			<h2> Lease your roof to solar installers. Get a price estimate now. </h2>    
+
 			<div class="row">
 			   
 
-				<div class="col-md-12 col-md-offset-0">
+				<div class="col-md-6 col-md-offset-0" style="padding: 20px; width: 100%;">
 
-    <div id="mapcontrols">			
-    <div style="float:left;">	
-    MAP CONTROLS: 
-    <button id="btnTerrain"> terrain </button> 
-	<button id="btnRoadmap"> Roadmap </button><
-	<button id="btnSatellite"> Satellite </button>
-	<button id="btnHybrid"> Hybrid </button> 
-	</div>
-	<input id="address" size="60" value="56, centre street, mountain view, California" /> 
+   		
+    	
+    
+	
+	<input id="address" size="60" value="77 Geary St #400, San Francisco, CA 94108" /> 
 	<button id="update_address" class="btn btn-secondary"> Update Address </button> 
 
-	<br/>
-	        Type of your roof: 
-	        <select id="tilt">
-				<option value="0"> Flat</option>
-				<option value="30"> Pitched </option>
-	        </select>
+	
+	        
 
-	Orientation of building: <input id="azimuth" size="4" value="180" /> <br /> <br />
+
+	Orientation of the roof: <input id="azimuth" size="4" value="180" /> 
+
+     
+
+	<select id="tilt">
+	            <option value="0"> Type of your roof </option>
+				<option value="0"> Flat </option>
+				<option value="30"> Pitched </option>
+	</select>
+
+	
+
 	<button id="calculate" class="btn btn-primary"> Calculate </button> <br /> <br />
+	
     <div id="results"></div>
+    <div id="results2"></div>
+
+
+    <div id='mapcontrols'>
+       		MAP CONTROLS: 
+		    <button id="btnTerrain"> Terrain </button> 
+			<button id="btnRoadmap"> Roadmap </button>
+			<button id="btnSatellite"> Satellite </button>
+			<button id="btnHybrid"> Hybrid </button> 
+    </div>
     <div id="mapDiv"></div>
     <div id="mapDiv45"></div>
-    <div  id="draggable" class="ui-widget-content"><img src="compass.png"></div>
+    
+    <div  id="draggable"><img src="compass.png"></div>
     </div>
 
 
@@ -328,50 +421,31 @@
 	<script src="assets/js/fancybox/jquery.fancybox.js"></script>    
 	<script src="assets/js/main.js"></script>
 		<script>
-		$(function(){
-			$.stellar({
-				horizontalScrolling: false,
-				verticalOffset: 40
-			});
-		});
+		
 		</script>
 
 		<script type="text/javascript">
-      $(function() {
-        //    fancybox
-          jQuery(".fancybox").fancybox();
-          // firebase 
-          var fb = new Firebase("https://solarpanel.firebaseio.com");
-
-
-          $("#calculateValue").click(function(){
-          		alert("Calculating all the things and storing in FireBase!");
-
-          		/* WRITE YOUR CODE HERE TO CALCULATE THINGS */
-          		var name =  $("#name").val(); 
-          		var email =  $("#email").val(); 
-          		var phoneNumber =  $("#phoneNumber").val(); 
-
-
-
-          		/* get all the variables */ 
-
-    /*
-          		fb.push({ 	name: name,
-							email: email,
-							phoneNumber: phoneNumber,
-							address: "4",
-							roofArea: "5", 
-							leasingPrice: "6",
-							energyGenerated: "7", 
-							localElectricityComp: "8"
- 				}); */
-
-          })
-      });
+     
 
 
 	   </script>
+
+
+	     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  
+  <style>
+  #draggable { width: 150px; height: 150px; padding: 0.5em; display: none;}
+  </style>
+  <script>
+  $(function() {
+    $( "#draggable" ).draggable();
+  });
+  </script>
+
+
+
 
   </body>
 </html>
