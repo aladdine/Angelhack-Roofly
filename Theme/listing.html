@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="assets/ico/favicon.ico">
 
-    <title>NYC - Design Studio</title>
+    <title>Roof.ly</title>
 
     <!-- Bootstdap core CSS -->
     <link href="assets/css/bootstdap.css" rel="stylesheet">
@@ -49,30 +49,50 @@
 	</nav>
 
 	<section id="home" name="home"></section>
-	<div id="headerwrap">
+	<div id="headerwrap" style="padding-top: 0px;">
+               
+		<div class="container">
+		 <p style="padding: 10px;"> <a style="margin-right: 10px;" onclick="$('#learn').slideToggle();" > Learn more </a> | <a style="margin-left: 10px; margin-right: 10px;" href="listing.html"> Browse roofs </a> | <a style="margin-left: 10px;" onclick="$('#about').slideToggle();"> About Roofly </a> </p>   
+		 
+		 
+		        <div id="learn" style="display: none; background: #cccccc; padding: 10px; border-radius: 10px; ">
+			    <h3> 1- Use the map below to select which part of your roof to lease to power companies. </h3>
+			    <h3> 2- Get an instant market price for your roof lease. </h3>
+			    <h3> 3- List your roof.  </h3>
+			    </div>
+
+			    <div id="about" style="display: none; background: #cccccc; padding: 10px; border-radius: 10px; ">
+			    <h3> Roofly is built with: </h3>
+			    <h3> APIs: Google Maps + PV Watts + Open EI + Idol onDemand  </h3>
+			    <h3> Data: Data.gov + Go Solar California  </h3>
+			    
+			    </div>
+
+			<h2> Browse roofs. Pick what matches your needs</h2>    
+
+
+
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
+
+
 					<table class="table table-stdiped" style="width:100%" id="myTable">
 					   <tr>
 					    <th>Name</th>
-					    <th>email</th>
-					    <th>phoneNumber</th>
-					    <th>address</th>
-					    <th>roofArea</th>
-					    <th>leasingPrice</th>
-					    <th>energyGenerated</th>
-					    <th>localElectdicityComp</th>
+					    <th>Roof Area (m2)</th>
+					    <th>Leasing Price ($)</th>
+					    <th>Electricity Production (kWh)</th>
+					    <th>Local Utility </th>
+					     <th>Pick </th>
 					  </tr>
 					  <tr>
 					    <td>Jill</td>
-					    <td>acwell@edu.edu</td> 
-					    <td>51234141240</td>
-					    <td>76 Oakleaf Dr.</td>
-					    <td>123 square feet</td>
-					    <td>$23,000</td>
-					    <td>45 khz</td> 
-					    <td>GE</td>
+					    <td>123 </td>
+					    <td>23,000</td>
+					    <td>45 kWh</td> 
+					    <td>PG&GE</td>
+					    <td> <button  class="btn btn-primary" > Pick </button> </td>
 					  </tr>
 					</table>
 				</div>
@@ -111,7 +131,8 @@
   				console.log();
   				cat = data.val();
   				console.log(cat);
-  				html = '<tr><td>' + cat.name + '</td><td>' + cat.email +'</td><td>' + cat.phoneNumber + '</td><td>' + cat.address + '</td><td>' + cat.roofArea + '</td><td>' + cat.leasingPrice + '</td><td>' + cat.energyGenerated + '</td><td>' + cat.localElectricityComp + '</td></tr>';
+  				html = '<tr><td>' + cat.name + '</td><td>' + cat.roofArea + '</td><td>' + cat.leasingPrice + '</td><td>' + cat.energyGenerated + '</td><td>' + cat.localElectricityComp + '</td></tr>' +
+  				' <button  class="btn btn-primary" > Pick </button> </td></tr>';
   				console.log(html);
   				$('#myTable').append(html);
   			})
