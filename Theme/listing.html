@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+
+    <title>NYC - Design Studio</title>
+
+    <!-- Bootstdap core CSS -->
+    <link href="assets/css/bootstdap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/js/fancybox/jquery.fancybox.css" rel="stylesheet" />
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target="#theMenu">
+		
+	<!-- Menu -->
+	<nav class="menu" id="theMenu">
+		<div class="menu-wrap">
+			<h1 class="logo"><a href="index.html#home">ROOFY</a></h1>
+			<i class="fa fa-times menu-close"></i>
+			<a href="index.html" class="smoothScroll">Home</a>
+			<a href="listing.html" class="smoothScroll">Listing</a>
+			<a href="#"><i class="fa fa-facebook"></i></a>
+			<a href="#"><i class="fa fa-twitter"></i></a>
+			<a href="#"><i class="fa fa-dribbble"></i></a>
+			<a href="#"><i class="fa fa-envelope"></i></a>
+		</div>
+		
+		<!-- Menu button -->
+		<div id="menuToggle"><i class="fa fa-bars"></i></div>
+	</nav>
+
+	<section id="home" name="home"></section>
+	<div id="headerwrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<table class="table table-stdiped" style="width:100%" id="myTable">
+					   <tr>
+					    <th>Name</th>
+					    <th>email</th>
+					    <th>phoneNumber</th>
+					    <th>address</th>
+					    <th>roofArea</th>
+					    <th>leasingPrice</th>
+					    <th>energyGenerated</th>
+					    <th>localElectdicityComp</th>
+					  </tr>
+					  <tr>
+					    <td>Jill</td>
+					    <td>acwell@edu.edu</td> 
+					    <td>51234141240</td>
+					    <td>76 Oakleaf Dr.</td>
+					    <td>123 square feet</td>
+					    <td>$23,000</td>
+					    <td>45 khz</td> 
+					    <td>GE</td>
+					  </tr>
+					</table>
+				</div>
+			</div><! --/row -->
+		</div><! --/container -->
+	</div><! --/headerwrap -->
+	
+	
+    <!-- Bootstdap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="assets/js/classie.js"></script>
+    <script src="assets/js/bootstdap.min.js"></script>
+    <script src="assets/js/smoothscroll.js"></script>
+	<script src="assets/js/jquery.stellar.min.js"></script>
+	<script src="assets/js/fancybox/jquery.fancybox.js"></script>    
+	<script src="assets/js/main.js"></script>
+		<script>
+		$(function(){
+			$.stellar({
+				horizontalScrolling: false,
+				verticalOffset: 40
+			});
+		});
+		</script>
+		
+	<script>
+		$(document).ready(function(){
+		var fb = new Firebase("https://solarpanel.firebaseio.com");
+
+
+		fb.on("value", function(data) {
+
+  			data.forEach(function(data){
+  				console.log();
+  				cat = data.val();
+  				console.log(cat);
+  				html = '<tr><td>' + cat.name + '</td><td>' + cat.email +'</td><td>' + cat.phoneNumber + '</td><td>' + cat.address + '</td><td>' + cat.roofArea + '</td><td>' + cat.leasingPrice + '</td><td>' + cat.energyGenerated + '</td><td>' + cat.localElectricityComp + '</td></tr>';
+  				console.log(html);
+  				$('#myTable').append(html);
+  			})
+		});
+	});
+
+address: "4"
+email: "acwells@smu.edu"
+energyGenerated: "7"
+leasingPrice: "6"
+localElectdicityComp: "8"
+name: "Austin"
+phoneNumber: "1234543234"
+roofArea: "5"
+	</script>
+
+	<style>
+		tr{
+			background-color:white;
+			    border: 1px solid black !important;
+		}
+	</style>
+
+  </body>
+</html>
