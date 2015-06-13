@@ -153,13 +153,13 @@
 
                  				 map.setCenter(results[0].geometry.location);
 
-				                 lat = results[0].geometry.location.k;
-				                 lon = results[0].geometry.location.D;
-				                 lat_adjacent = Number(results[0].geometry.location.k) + 0.0001;
-				                 lon_adjacent = Number(results[0].geometry.location.D) + 0.0001;
+				                 lat = results[0].geometry.location.lat();
+				                 lon = results[0].geometry.location.lng();
+				                 lat_adjacent = Number(results[0].geometry.location.lat()) + 0.0001;
+				                 lon_adjacent = Number(results[0].geometry.location.lng()) + 0.0001;
 
 				                 console.log("LAT: " + lat + " | ADJACENT LAT: " + lat_adjacent + " LON: " + lon + " | ADJACENT LON: " + lon_adjacent);
-
+                                 console.log(results[0].geometry);
 								 var natureCoords = [
 				                 new google.maps.LatLng(lat, lon_adjacent),   
 				                 new google.maps.LatLng(lat, lon),   
