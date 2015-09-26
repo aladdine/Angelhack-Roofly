@@ -1,0 +1,25 @@
+#mapDiv { 
+	height: 600px; 
+	width: 100%; \}
+#mapDiv45 { 
+	height: 400px; 
+	width: 400px;}
+#mapcontrols { 
+	width: 100%; 
+	margin-bottom: 0.5em;  
+	margin-top: 0.5em;}
+
+#draggable { 
+	width: 150px; height: 150px; padding: 0.5em; position: absolute;
+    left: 100px;
+    top: 150px;
+    display: none;}
+
+#mapDiv45 { 
+	width: 150px; 
+	height: 150px; 
+	padding: 0.5em; 
+	position: absolute; 
+	border: 10px solid #FFFFFF;
+    right: 100px;
+    top: 150px;} 
